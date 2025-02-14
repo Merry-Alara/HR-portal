@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Requests - HR Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9; /* Light gray background */
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            padding: 15px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff; /* White color for links */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        body {
+            padding-top: 80px; /* Space for the navbar */
+        }
+
+        /* Content styling */
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #031527; /* Dark Blue for headings */
+            font-weight: 700;
+        }
+
+        .leave-request, .leave-history {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Leave Request Form Styling */
+        .leave-request form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .leave-request input, .leave-request select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .leave-request button {
+            grid-column: span 2;
+            padding: 10px;
+            background-color: #031527; /* Dark Blue for buttons */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .leave-request button:hover {
+            background-color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        /* Leave History Table Styling */
+        .leave-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leave-history table, .leave-history th, .leave-history td {
+            border: 1px solid #ccc;
+        }
+
+        .leave-history th, .leave-history td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .leave-history th {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .leave-history tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            .leave-request form {
+                grid-template-columns: 1fr;
+            }
+
+            .leave-request button {
+                grid-column: 1;
+            }
+
+            .leave-history table, .leave-history th, .leave-history td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="leave.html">Leave Requests</a></li>
+            <li><a href="payroll.html">Payroll History</a></li>
+            <li><a href="attendance.html">Attendance</a></li>
+            <li><a href="documents.html">Documents</a></li>
+        </ul>
+    </nav>
+
+    <!-- Leave Requests Section -->
+    <section id="leave-requests" class="container">
+        <h2>Leave Requests</h2>
+
+        <!-- Leave Request Form -->
+        <div class="leave-request">
+            <h3>Request a Leave</h3>
+            <form id="leaveForm">
+                <label for="leave-type">Leave Type</label>
+                <select id="leave-type" required>
+                    <option value="sick">Sick Leave</option>
+                    <option value="vacation">Vacation Leave</option>
+                    <option value="personal">Personal Leave</option>
+                </select>
+
+                <label for="start-date">Start Date</label>
+                <input type="date" id="start-date" required>
+
+                <label for="end-date">End Date</label>
+                <input type="date" id="end-date" required>
+
+                <button type="submit">Submit Leave Request</button>
+            </form>
+        </div>
+
+        <!-- Leave History Section -->
+        <div class="leave-history">
+            <h3>Your Leave History</h3>
+            <table id="leaveHistoryTable">
+                <thead>
+                    <tr>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic content will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Leave Request Form Submission
+        document.getElementById("leaveForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const leaveType = document.getElementById("leave-type").value;
+            const startDate = document.getElementById("start-date").value;
+            const endDate = document.getElementById("end-date").value;
+
+            const newLeave = {
+                type: leaveType,
+                startDate: startDate,
+                endDate: endDate,
+                status: 'Pending'
+            };
+
+            // Insert the new leave request into the leave history table
+            const table = document.getElementById("leaveHistoryTable").getElementsByTagName('tbody')[0];
+            const row = table.insertRow();
+            row.insertCell(0).textContent = newLeave.type.charAt(0).toUpperCase() + newLeave.type.slice(1);
+            row.insertCell(1).textContent = newLeave.startDate;
+            row.insertCell(2).textContent = newLeave.endDate;
+            row.insertCell(3).textContent = newLeave.status;
+
+            // Clear the form inputs
+            document.getElementById("leaveForm").reset();
+            alert("Your leave request has been submitted successfully.");
+        });
+    </script>
+
+</body>
+</html>

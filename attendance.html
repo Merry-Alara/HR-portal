@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance - HR Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            padding: 15px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff; /* White color for links */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        body {
+            padding-top: 80px; /* Space for the navbar */
+        }
+
+        /* Content styling */
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #031527; /* Dark Blue for headings */
+            font-weight: 700;
+        }
+
+        /* Attendance Section */
+        .attendance-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search input, .search select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 45%;
+        }
+
+        /* Attendance Table Styling */
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .attendance-table, .attendance-table th, .attendance-table td {
+            border: 1px solid #ccc;
+        }
+
+        .attendance-table th, .attendance-table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .attendance-table th {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .attendance-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .status-present {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-absent {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-sick {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status-leave {
+            color: blue;
+            font-weight: bold;
+        }
+
+        /* Button Styling */
+        .attendance-table button {
+            padding: 10px;
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .attendance-table button:hover {
+            background-color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            .attendance-table, .attendance-table th, .attendance-table td {
+                font-size: 14px;
+            }
+
+            .search input, .search select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="leave.html">Leave Requests</a></li>
+            <li><a href="payroll.html">Payroll History</a></li>
+            <li><a href="attendance.html">Attendance</a></li>
+            <li><a href="documents.html">Documents</a></li>
+        </ul>
+    </nav>
+
+    <!-- Attendance Section -->
+    <section id="attendance" class="container">
+        <h2>Attendance Records</h2>
+
+        <!-- Search Section -->
+        <div class="search">
+            <input type="text" id="searchDate" placeholder="Search by Date" onkeyup="filterAttendance()">
+            <select id="status-filter" onchange="filterAttendance()">
+                <option value="">All Status</option>
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+                <option value="Sick">Sick</option>
+                <option value="Leave">Leave</option>
+            </select>
+        </div>
+
+        <!-- Attendance Table -->
+        <div class="attendance-section">
+            <table class="attendance-table" id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example attendance records -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>2023-01-01</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>2023-01-02</td>
+                        <td class="status-absent">Absent</td>
+                    </tr>
+                    <tr>
+                        <td>Michael Brown</td>
+                        <td>2023-01-03</td>
+                        <td class="status-sick">Sick</td>
+                    </tr>
+                    <tr>
+                        <td>Emily Davis</td>
+                        <td>2023-01-04</td>
+                        <td class="status-leave">Leave</td>
+                    </tr>
+                    <tr>
+                        <td>Sarah Wilson</td>
+                        <td>2023-01-05</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Filter attendance based on search or status
+        function filterAttendance() {
+            const searchDate = document.getElementById("searchDate").value.toLowerCase();
+            const statusFilter = document.getElementById("status-filter").value.toLowerCase();
+            const rows = document.querySelectorAll("#attendanceTable tbody tr");
+
+            rows.forEach(row => {
+                const dateText = row.cells[1].textContent.toLowerCase();
+                const statusText = row.cells[2].textContent.toLowerCase();
+
+                if ((dateText.includes(searchDate)) && (statusFilter === "" || statusText.includes(statusFilter))) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

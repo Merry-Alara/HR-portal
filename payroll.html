@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll History - HR Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9; /* Light gray background */
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            padding: 15px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff; /* White color for links */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        body {
+            padding-top: 80px; /* Space for the navbar */
+        }
+
+        /* Content styling */
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #031527; /* Dark Blue for headings */
+            font-weight: 700;
+        }
+
+        /* Payroll History Section */
+        .payroll-history {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search input, .search select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 45%;
+        }
+
+        /* Payroll Table Styling */
+        .payroll-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .payroll-history table, .payroll-history th, .payroll-history td {
+            border: 1px solid #ccc;
+        }
+
+        .payroll-history th, .payroll-history td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .payroll-history th {
+            background-color: #031527; /* Dark Navy Blue for table header */
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .payroll-history tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Button Styling */
+        .payroll-history button {
+            padding: 10px;
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payroll-history button:hover {
+            background-color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            .payroll-history table, .payroll-history th, .payroll-history td {
+                font-size: 14px;
+            }
+
+            .search input, .search select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="leave.html">Leave Requests</a></li>
+            <li><a href="payroll.html">Payroll History</a></li>
+            <li><a href="attendance.html">Attendance</a></li>
+            <li><a href="documents.html">Documents</a></li>
+        </ul>
+    </nav>
+
+    <!-- Payroll History Section -->
+    <section id="payroll-history" class="container">
+        <h2>Payroll History</h2>
+
+        <!-- Search / Filter Section -->
+        <div class="search">
+            <input type="text" id="searchDate" placeholder="Search by Date" onkeyup="filterPayroll()">
+            <select id="payment-status" onchange="filterPayroll()">
+                <option value="">All Status</option>
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+            </select>
+        </div>
+
+        <!-- Payroll History Table -->
+        <div class="payroll-history">
+            <table id="payrollHistoryTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Salary</th>
+                        <th>Bonus</th>
+                        <th>Tax Deduction</th>
+                        <th>Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Payroll history entries will be dynamically inserted here -->
+                    <tr>
+                        <td>01/2023</td>
+                        <td>$3,000</td>
+                        <td>$200</td>
+                        <td>$300</td>
+                        <td>Paid</td>
+                    </tr>
+                    <tr>
+                        <td>02/2023</td>
+                        <td>$3,200</td>
+                        <td>$250</td>
+                        <td>$320</td>
+                        <td>Pending</td>
+                    </tr>
+                    <tr>
+                        <td>03/2023</td>
+                        <td>$3,100</td>
+                        <td>$180</td>
+                        <td>$310</td>
+                        <td>Paid</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Filter payroll history based on search date or payment status
+        function filterPayroll() {
+            const searchDate = document.getElementById("searchDate").value.toLowerCase();
+            const statusFilter = document.getElementById("payment-status").value.toLowerCase();
+            const rows = document.querySelectorAll("#payrollHistoryTable tbody tr");
+
+            rows.forEach(row => {
+                const dateText = row.cells[0].textContent.toLowerCase();
+                const statusText = row.cells[4].textContent.toLowerCase();
+
+                if (dateText.includes(searchDate) && (statusFilter === "" || statusText.includes(statusFilter))) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

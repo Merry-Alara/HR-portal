@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - HR Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9; /* Light gray background */
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            padding: 15px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff; /* White color for links */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        body {
+            padding-top: 80px; /* Space for the navbar */
+        }
+
+        /* Content styling */
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #031527; /* Dark Blue for headings */
+            font-weight: 700;
+        }
+
+        /* Documents Section */
+        .documents-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .upload-section input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .upload-section button {
+            padding: 10px 20px;
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-section button:hover {
+            background-color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        .documents-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .documents-table, .documents-table th, .documents-table td {
+            border: 1px solid #ccc;
+        }
+
+        .documents-table th, .documents-table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .documents-table th {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .documents-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .document-link {
+            text-decoration: none;
+            color: #031527;
+            font-weight: bold;
+        }
+
+        .document-link:hover {
+            color: #007BFF;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            .documents-table th, .documents-table td {
+                font-size: 14px;
+            }
+
+            .upload-section input[type="file"], .upload-section button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="leave.html">Leave Requests</a></li>
+            <li><a href="payroll.html">Payroll History</a></li>
+            <li><a href="attendance.html">Attendance</a></li>
+            <li><a href="documents.html">Documents</a></li>
+        </ul>
+    </nav>
+
+    <!-- Documents Section -->
+    <section id="documents" class="container">
+        <h2>Documents</h2>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h3>Upload Documents</h3>
+            <form id="documentUploadForm">
+                <input type="file" id="documentFile" accept="application/pdf, image/*" required>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+
+        <!-- Documents Table -->
+        <div class="documents-section">
+            <h3>Uploaded Documents</h3>
+            <table class="documents-table" id="documentsTable">
+                <thead>
+                    <tr>
+                        <th>Document Name</th>
+                        <th>Uploaded On</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Documents -->
+                    <tr>
+                        <td>Employee Contract</td>
+                        <td>2023-01-01</td>
+                        <td><a href="files/employee-contract.pdf" class="document-link" download>Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>Certification of Completion</td>
+                        <td>2023-02-15</td>
+                        <td><a href="files/certification.pdf" class="document-link" download>Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>Tax Filing Form</td>
+                        <td>2023-03-10</td>
+                        <td><a href="files/tax-filing-form.pdf" class="document-link" download>Download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Handling the document upload form submission
+        document.getElementById('documentUploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('documentFile');
+            const fileName = fileInput.files[0].name;
+            const uploadDate = new Date().toLocaleDateString();
+
+            // Add new document row to the table (For now, it will only simulate file upload)
+            const tableBody = document.getElementById('documentsTable').getElementsByTagName('tbody')[0];
+            const newRow = tableBody.insertRow();
+
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+
+            cell1.textContent = fileName;
+            cell2.textContent = uploadDate;
+            cell3.innerHTML = `<a href="#" class="document-link" download>Download</a>`;
+
+            // Reset the file input after upload
+            fileInput.value = '';
+        });
+    </script>
+
+</body>
+</html>

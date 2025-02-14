@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - HR Employee Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9; /* Light gray background */
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #031527; /* Dark Navy Blue */
+            color: #fff;
+            padding: 15px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff; /* White color for links */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        body {
+            padding-top: 80px; /* Space for the navbar */
+        }
+
+        /* Content styling */
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #031527; /* Dark Blue for headings */
+            font-weight: 700;
+        }
+
+        .profile-card, .update-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+        }
+
+        .profile-info p {
+            margin: 10px 0;
+        }
+
+        .update-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .update-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #031527; /* Dark Blue for buttons */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .update-form button:hover {
+            background-color: #f1c40f; /* Golden yellow for hover effect */
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            .profile-card, .update-form {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="leave.html">Leave Requests</a></li>
+            <li><a href="payroll.html">Payroll History</a></li>
+            <li><a href="attendance.html">Attendance</a></li>
+            <li><a href="documents.html">Documents</a></li>
+        </ul>
+    </nav>
+
+    <!-- Profile Section -->
+    <section id="profile" class="container">
+        <h2>Your Profile</h2>
+        
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-info">
+                <p><strong>Name:</strong> John Doe</p>
+                <p><strong>Position:</strong> Software Engineer</p>
+                <p><strong>Department:</strong> IT</p>
+                <p><strong>Email:</strong> john.doe@example.com</p>
+            </div>
+            
+            <button onclick="showEditForm()" class="btn">Edit Profile</button>
+        </div>
+
+        <!-- Update Profile Form (Initially Hidden) -->
+        <div class="update-form" id="updateForm" style="display: none;">
+            <h3>Edit Profile</h3>
+            <form id="profileForm">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" value="John Doe" required>
+
+                <label for="position">Position</label>
+                <input type="text" id="position" value="Software Engineer" required>
+
+                <label for="department">Department</label>
+                <input type="text" id="department" value="IT" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" value="john.doe@example.com" required>
+
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Toggle the Edit Profile Form
+        function showEditForm() {
+            document.getElementById("updateForm").style.display = "block";
+            document.querySelector(".profile-card").style.display = "none";
+        }
+
+        // Handle Profile Form Submission
+        document.getElementById("profileForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Retrieve input values
+            const name = document.getElementById("name").value;
+            const position = document.getElementById("position").value;
+            const department = document.getElementById("department").value;
+            const email = document.getElementById("email").value;
+
+            // Update the profile card
+            document.querySelector(".profile-info").innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Position:</strong> ${position}</p>
+                <p><strong>Department:</strong> ${department}</p>
+                <p><strong>Email:</strong> ${email}</p>
+            `;
+            
+            // Hide the form and show the updated profile
+            document.getElementById("updateForm").style.display = "none";
+            document.querySelector(".profile-card").style.display = "block";
+
+            alert("Profile updated successfully!");
+        });
+    </script>
+</body>
+</html>
